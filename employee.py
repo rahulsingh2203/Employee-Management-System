@@ -11,21 +11,6 @@ class Employee:
         self.root.geometry("1530x790+0+0")
         self.root.title("Cheeku Singh's Employee Management System")
 
-        #varialbes for entry
-        self.var_dep=StringVar()
-        self.var_name=StringVar()
-        self.var_design=StringVar()
-        self.var_email=StringVar()
-        self.var_address=StringVar()
-        self.var_marital=StringVar()
-        self.var_dob=StringVar()
-        self.var_doj=StringVar()
-        self.var_idproofcomb=StringVar()
-        self.var_idproof=StringVar()
-        self.var_gender=StringVar()
-        self.var_contact=StringVar()
-        self.var_country=StringVar()
-        self.var_salary=StringVar()
 
         
         #Heading
@@ -77,25 +62,41 @@ class Employee:
         upper_frame =LabelFrame(main_frame,bd=2,relief=RIDGE,bg='white',text='Employee Information', font=('times new roman',15,'bold'),fg='red')
         upper_frame.place(x=15,y=0,width=1470,height=250)
 
-        #Labels and Entry Fields
+        #varialbes for entry
+        self.var_dep=StringVar()
+        self.var_name=StringVar()
+        self.var_design=StringVar()
+        self.var_email=StringVar()
+        self.var_address=StringVar()
+        self.var_marital=StringVar()
+        self.var_dob=StringVar()
+        self.var_doj=StringVar()
+        self.var_idproofcomb=StringVar()
+        self.var_idproof=StringVar()
+        self.var_gender=StringVar()
+        self.var_contact=StringVar()
+        self.var_country=StringVar()
+        self.var_salary=StringVar()
 
+
+        #Labels and Entry Fields
         # 0th Row
         #Department
         lbl_dept = Label(upper_frame, text="Department:", font=('ariel',11,'bold'), bg='white')
         lbl_dept.grid(row=0,column=0,padx=2,sticky=W)
 
         #Select Department
-        combo_dept =ttk.Combobox(upper_frame,textvariable=self.var_dep,font=('ariel',11,'bold'),width=20,state='readonly')
+        combo_dept =ttk.Combobox(upper_frame, textvariable=self.var_dep, font=('ariel',11,'bold'),width=20,state='readonly')
         combo_dept['value']=('Select Department','HR','Engineer','Manager')
         combo_dept.current(0)
         combo_dept.grid(row=0,column=1,padx=2,pady=10,sticky=W)
 
         #name
-        lbl_name = Label(upper_frame, text="Name:", font=('ariel',11,'bold'), bg='white')
+        lbl_name = Label(upper_frame, text="Name:", font=('ari3l',11,'bold'), bg='white')
         lbl_name.grid(row=0,column=2,padx=2,sticky=W)
 
         #name entry
-        txt_name=ttk.Entry(upper_frame,textvariable=self.var_name,width=22,font=("ariel",11,"bold"))
+        txt_name=ttk.Entry(upper_frame, textvariable=self.var_name, width=22,font=("ariel",11,"bold"))
         txt_name.grid(row=0,column=3, sticky=W, padx=2,pady=7)
 
         #phone number
@@ -106,7 +107,7 @@ class Employee:
         txt_phone=ttk.Entry(upper_frame,textvariable=self.var_contact,width=22,font=("ariel",11,"bold"))
         txt_phone.grid(row=0,column=5, sticky=W, padx=2,pady=7)
 
-        #-----------------------------------------------------------------------------
+        #------------------------------------------------------------------------------------------------
 
         # 1st Row
         #designation
@@ -133,7 +134,7 @@ class Employee:
         txt_country=ttk.Entry(upper_frame,textvariable=self.var_country,width=22,font=("ariel",11,"bold"))
         txt_country.grid(row=1,column=5, sticky=W, padx=2,pady=7)
 
-        #------------------------------------------------------------------
+        #----------------------------------------------------------------------------------------------
 
         #2nd Row
         #address
@@ -162,7 +163,7 @@ class Employee:
         txt_salary=ttk.Entry(upper_frame,textvariable=self.var_salary,width=22,font=("ariel",11,"bold"))
         txt_salary.grid(row=2,column=5, sticky=W, padx=2,pady=7)
 
-        #-------------------------------------------------------------------------
+        #-----------------------------------------------------------------------------
 
         #3rd Row
         #DOB
@@ -181,7 +182,7 @@ class Employee:
         txt_DOJ=ttk.Entry(upper_frame,textvariable=self.var_doj,width=22,font=("ariel",11,"bold"))
         txt_DOJ.grid(row=3,column=3, sticky=W, padx=2,pady=7)
 
-        #------------------------------------------------------------------------
+        #-------------------------------------------------------------------------------
 
         #4th row
         #ID
@@ -204,7 +205,7 @@ class Employee:
         combo_Gender.current(0)
         combo_Gender.grid(row=4,column=3,padx=2,pady=10,sticky=W)
 
-        #-----------------------------------------------------------------------------
+        #----------------------------------------------------------------------------------------
 
         #profile photo
         img_profile=Image.open( 'Images/4.jpg')
@@ -214,7 +215,7 @@ class Employee:
         self.img_profile=Label(upper_frame,image=self.photo_profile)
         self.img_profile.place(x=1050,y=5,width=200,height=200)
 
-        #----------------------------------------------------------------------------
+        #----------------------------------------------------------------------------------------
 
         #Button Frame
         btn_frame =Frame(upper_frame,bd=2,relief=RIDGE,bg='white')
@@ -308,6 +309,9 @@ class Employee:
         self.employee_table['show']='headings'
         #self.employee_table.column("dep",width=100)
         self.employee_table.pack(fill=BOTH,expand=1)
+        self.employee_table.bind("<ButtonRelease>", self.get_cursor)
+
+        self.fetch_data()
 
     #function
 
@@ -318,16 +322,90 @@ class Employee:
             try:
                 conn=mysql.connector.connect(host='localhost',username='root',password='Rahul@2203',database='employee_management_system')
                 my_cursor=conn.cursor()
-                my_cursor.execute('insert into emp_table values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,)',(self.var_dep.get(), self.var_name.get(), self.var_design.get(), self.var_email.get(), self.var_address.get(), self.var_marital.get(), self.var_dob.get(), self.var_doj.get(), self.var_idproofcomb.get(), self.var_idproof.get(), self.var_gender.get(), self.var_contact.get(), self.var_country.get(), self.var_salary.get() ))
+                my_cursor.execute('INSERT INTO emp1 VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,)',
+                (self.var_dep.get(),
+                self.var_name.get(),
+                self.var_design.get(),
+                self.var_email.get(),
+                self.var_address.get(),
+                self.var_marital.get(),
+                self.var_dob.get(),
+                self.var_doj.get(),
+                self.var_idproofcomb.get(),
+                self.var_idproof.get(),
+                self.var_gender.get(),
+                self.var_contact.get(),
+                self.var_country.get(),
+                self.var_salary.get()
+                ))
                 conn.commit()
+                self.fetch_data()
                 conn.close()
                 messagebox.showinfo('Success','Employee has been added',parent=self.root)
             except Exception as es:
-                messagebox.showerror('Error',f'Due to:{str(es)}',parent=self.root)
+                messagebox.showerror('Error',f'Due To:{str(es)}',parent=self.root)
 
 
 
-        
+    #fetch data
+    def fetch_data(self):
+        conn=mysql.connector.connect(host='localhost',username='root',password='Rahul@2203',database='employee_management_system')
+        my_cursor=conn.cursor()
+        my_cursor.execute('SELECT * FROM emp1')
+        data=my_cursor.fetchall()
+        if len(data)!=0:
+            self.employee_table.delete(*self.employee_table.get_children())
+            for i in data:
+                self.employee_table.insert("",END,values=i)
+            conn.commit()
+        conn.close()
+
+    #Get Cursor
+    def fet_cursor(self, event=""):
+        cursor_row=self.employee_table.focus()
+        content=self.employee_table.item(cursor_row)
+        data=content['values']
+
+        self.var_dep.set(data[0])
+        self.var_name.set(data[1])
+        self.var_design.set(data[2])
+        self.var_email.set(data[3])
+        self.var_address.set(data[4])
+        self.var_marital.set(data[5])
+        self.var_dob.set(data[6])
+        self.var_doj.set(data[7])
+        self.var_idproof.set(data[8])
+        self.var_idproof.set(data[9])
+        self.var_gender.set(data[10])
+        self.var_contact.set(data[11])
+        self.var_country.set(data[12])
+        self.var_salary.set(data[13])
+
+    #Update data
+    def update_data(self):
+        if self.var_dep.get()=="" or self.var_email.get()=="" :
+            messagebox.showerror('Error!','All fields are required')
+        else:
+            try:
+                update=messagebox.askyesno("Update","Are you sure to update this data?")
+                if update>0:
+                    conn=mysql.connector.connect(host='localhost',username='root',password='Rahul@2203',database='employee_management_system')
+                    my_cursor=conn.cursor()
+                    my_cursor.execute("UPDATE emp1 SET Department=%s,
+                    Name=%s,
+                    Designation=%s,
+                    Email=%s,
+                    Address=%s,
+                    Marital=%s,
+                    DOB=%s,
+                    DOJ=%s,
+                    ID_proof_type=%s,
+                    Gender=%s,
+                    Phone=%s,
+                    Country=%s,
+                    Salary=%s
+                    where ID_proof=%s,(")
+
 
 
 
